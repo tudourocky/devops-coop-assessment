@@ -1,5 +1,61 @@
 services:
-  server:
+  node1:
     build: node
+    restart: always
+    expose:
+      - "3000"
+    networks:
+      - appnet
+
+
+  node2:
+    build: node
+    restart: always
+    expose:
+      - "3000"
+    networks:
+      - appnet
+
+
+  node3:
+    build: node
+    restart: always
+    expose:
+      - "3000"
+    networks:
+      - appnet
+
+
+  node4:
+    build: node
+    restart: always
+    expose:
+      - "3000"
+    networks:
+      - appnet
+
+  node5:
+    build: node
+    restart: always
+    expose:
+      - "3000"
+    networks:
+      - appnet
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./node/nginx.conf:/etc/nginx/nginx.conf:ro
     ports:
-      - 3000:3000
+      - "3000:3000"
+    depends_on:
+      - node1
+      - node2
+      - node3
+      - node4
+      - node5
+    networks:
+      - appnet
+
+networks:
+  appnet:
